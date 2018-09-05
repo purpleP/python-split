@@ -35,7 +35,10 @@ def groupby(sequence, key=lambda x: x):
             if buffered:
                 yield buffered.popleft()
             else:
-                next_key, value = next(kvs)
+                try:
+                    next_key, value = next(kvs)
+                except StopIteration:
+                    return
                 buffers[next_key].append(value)
     while True:
         try:
